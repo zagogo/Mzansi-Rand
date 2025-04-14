@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency & Measurement Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: #fff;
+            text-align: center;
+        }
+
+        header {
+            background: #ff6f61;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .converter {
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input {
+            background: #fff;
+            color: #333;
+        }
+
+        select {
+            background: #ffe7e0;
+            color: #333;
+        }
+
+        button {
+            background: #28a745;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tabs button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .tabs button.active {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Currency & Measurement Converter
+    </header>
+
+    <div class="tabs">
+        <button id="measurementTab" class="active" onclick="showConverter('measurement')">Measurement Converter</button>
+        <button id="currencyTab" onclick="showConverter('currency')">Currency Converter</button>
+    </div>
+
+    <div id="currencyConverter" class="converter" style="display: none;">
+        <h2>Convert Your Money</h2>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount" />
+
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="ZAR">ZAR - South African Rand</option>
+            <option value="NZD">NZD - New Zealand Dollar</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="KRW">KRW - South Korean Won</option>
+            <option value="MXN">MXN - Mexican Peso</option>
+            <option value="BRL">BRL - Brazilian Real</option>
+            <option value="RUB">RUB - Russian Ruble</option>
+            <option value="SAR">SAR - Saudi Riyal</option>
+            <option value="AED">AED - UAE Dirham</option>
+        </select>
+
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency">
+            <option value="USD">USD - US Dollar</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="INR">INR - Indian Rupee</option>
+            <option value="GBP">GBP - British Pound</option>
+            <option value="AUD">AUD - Australian Dollar</option>
+            <option value="CAD">CAD - Canadian Dollar</option>
+            <option value="JPY">JPY - Japanese Yen</option>
+            <option value="CNY">CNY - Chinese Yuan</option>
+            <option value="CHF">CHF - Swiss Franc</option>
+            <option value="ZAR">ZAR - South African Rand</option>
+            <option value="NZD">NZD - New Zealand Dollar</option>
+            <option value="SGD">SGD - Singapore Dollar</option>
+            <option value="HKD">HKD - Hong Kong Dollar</option>
+            <option value="KRW">KRW - South Korean Won</option>
+            <option value="MXN">MXN - Mexican Peso</option>
+            <option value="BRL">BRL - Brazilian Real</option>
+            <option value="RUB">RUB - Russian Ruble</option>
+            <option value="SAR">SAR - Saudi Riyal</option>
+            <option value="AED">AED - UAE Dirham</option>
+        </select>
+
+        <button onclick="convertCurrency()">Convert</button>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <div id="measurementConverter" class="converter">
+        <h2>Convert Measurements</h2>
+
+        <label for="measurementAmount">Amount:</label>
+        <input type="number" id="measurementAmount" placeholder="Enter amount" />
+
+        <label for="fromMeasurement">From:</label>
+        <select id="fromMeasurement">
+            <option value="meter">Meter</option>
+            <option value="kilometer">Kilometer</option>
+            <option value="mile">Mile</option>
+            <option value="inch">Inch</option>
+            <option value="foot">Foot</option>
+            <option value="yard">Yard</option>
+            <option value="centimeter">Centimeter</option>
+            <option value="millimeter">Millimeter</option>
+            <option value="gram">Gram</option>
+            <option value="kilogram">Kilogram</option>
+            <option value="pound">Pound</option>
+            <option value="ounce">Ounce</option>
+            <option value="liter">Liter</option>
+            <option value="milliliter">Milliliter</option>
+            <option value="gallon">Gallon</option>
+            <option value="quart">Quart</option>
+        </select>
+
+        <label for="toMeasurement">To:</label>
+        <select id="toMeasurement">
+            <option value="meter">Meter</option>
+            <option value="kilometer">Kilometer</option>
+            <option value="mile">Mile</option>
+            <option value="inch">Inch</option>
+            <option value="foot">Foot</option>
+            <option value="yard">Yard</option>
+            <option value="centimeter">Centimeter</option>
+            <option value="millimeter">Millimeter</option>
+            <option value="gram">Gram</option>
+            <option value="kilogram">Kilogram</option>
+            <option value="pound">Pound</option>
+            <option value="ounce">Ounce</option>
+            <option value="liter">Liter</option>
+            <option value="milliliter">Milliliter</option>
+            <option value="gallon">Gallon</option>
+            <option value="quart">Quart</option>
+        </select>
+
+        <button onclick="convertMeasurement()">Convert</button>
+
+        <div id="measurementResult" class="result"></div>
+    </div>
+
+    <script>
+        function showConverter(type) {
+            const currencyConverter = document.getElementById('currencyConverter');
+            const measurementConverter = document.getElementById('measurementConverter');
+            const currencyTab = document.getElementById('currencyTab');
+            const measurementTab = document.getElementById('measurementTab');
+
+            if (type === 'currency') {
+                currencyConverter.style.display = 'block';
+                measurementConverter.style.display = 'none';
+                currencyTab.classList.add('active');
+                measurementTab.classList.remove('active');
+            } else {
+                currencyConverter.style.display = 'none';
+                measurementConverter.style.display = 'block';
+                measurementTab.classList.add('active');
+                currencyTab.classList.remove('active');
+            }
+        }
+
+        function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (amount === '' || amount <= 0) {
+                document.getElementById('result').innerHTML = 'Please enter a valid amount.';
+                return;
+            }
+
+            fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`)
+                .then(response => response.json())
+                .then(data => {
+                    const rate = data.rates[toCurrency];
+                    const convertedAmount = (amount * rate).toFixed(2);
+                    document.getElementById('result').innerHTML = `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
+                })
+                .catch(() => {
+                    document.getElementById('result').innerHTML = 'Error fetching conversion rates.';
+                });
+        }
+
+        function convertMeasurement() {
+            const amount = parseFloat(document.getElementById('measurementAmount').value);
+            const fromUnit = document.getElementById('fromMeasurement').value;
+            const toUnit = document.getElementById('toMeasurement').value;
+
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('measurementResult').innerHTML = 'Please enter a valid amount.';
+                return;
+            }
+
+            const conversionRates = {
+                meter: 1,
+                kilometer: 0.001,
+                mile: 0.000621371,
+                inch: 39.3701,
+                foot: 3.28084,
+                yard: 1.09361,
+                centimeter: 100,
+                millimeter: 1000,
+                gram: 1,
+                kilogram: 0.001,
+                pound: 0.00220462,
+                ounce: 0.035274,
+                liter: 1,
+                milliliter: 1000,
+                gallon: 0.264172,
+                quart: 1.05669
+            };
+
+            if (fromUnit === 'foot' && toUnit === 'inch') {
+                document.getElementById('measurementResult').innerHTML = `${amount} foot(feet) = ${(amount * 12).toFixed(2)} inch(es)`;
+                return;
+            } else if (fromUnit === 'inch' && toUnit === 'foot') {
+                document.getElementById('measurementResult').innerHTML = `${amount} inch(es) = ${(amount / 12).toFixed(2)} foot(feet)`;
+                return;
+            }
+
+            const result = (amount * conversionRates[fromUnit]) / conversionRates[toUnit];
+            document.getElementById('measurementResult').innerHTML = `${amount} ${fromUnit}(s) = ${result.toFixed(2)} ${toUnit}(s)`;
+        }
+    </script>
+</body>
+</html>
+
+
+HTML CODE FOR CURRENCY CONVERTOR APP ONLY.
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-roboto">
+    <div class="container mx-auto p-4">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-2xl font-bold mb-4 text-center">Currency Converter</h2>
+                <form id="currency-form">
+                    <div class="mb-4">
+                        <label for="amount" class="block text-gray-700">Amount</label>
+                        <input type="number" id="amount" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter amount">
+                    </div>
+                    <div class="mb-4">
+                        <label for="from-currency" class="block text-gray-700">From</label>
+                        <select id="from-currency" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="USD">USD - United States Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                            <option value="SEK">SEK - Swedish Krona</option>
+                            <option value="NZD">NZD - New Zealand Dollar</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="BRL">BRL - Brazilian Real</option>
+                            <option value="RUB">RUB - Russian Ruble</option>
+                            <option value="ZAR">ZAR - South African Rand</option>
+                            <option value="SGD">SGD - Singapore Dollar</option>
+                            <option value="HKD">HKD - Hong Kong Dollar</option>
+                            <option value="MXN">MXN - Mexican Peso</option>
+                            <option value="NOK">NOK - Norwegian Krone</option>
+                            <option value="KRW">KRW - South Korean Won</option>
+                            <option value="TRY">TRY - Turkish Lira</option>
+                            <option value="ARS">ARS - Argentine Peso</option>
+                            <option value="CLP">CLP - Chilean Peso</option>
+                            <option value="COP">COP - Colombian Peso</option>
+                            <option value="CZK">CZK - Czech Koruna</option>
+                            <option value="DKK">DKK - Danish Krone</option>
+                            <option value="EGP">EGP - Egyptian Pound</option>
+                            <option value="HUF">HUF - Hungarian Forint</option>
+                            <option value="IDR">IDR - Indonesian Rupiah</option>
+                            <option value="ILS">ILS - Israeli Shekel</option>
+                            <option value="MYR">MYR - Malaysian Ringgit</option>
+                            <option value="NGN">NGN - Nigerian Naira</option>
+                            <option value="PHP">PHP - Philippine Peso</option>
+                            <option value="PLN">PLN - Polish Zloty</option>
+                            <option value="RON">RON - Romanian Leu</option>
+                            <option value="SAR">SAR - Saudi Riyal</option>
+                            <option value="THB">THB - Thai Baht</option>
+                            <option value="UAH">UAH - Ukrainian Hryvnia</option>
+                            <option value="VND">VND - Vietnamese Dong</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="to-currency" class="block text-gray-700">To</label>
+                        <select id="to-currency" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="USD">USD - United States Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                            <option value="CHF">CHF - Swiss Franc</option>
+                            <option value="CNY">CNY - Chinese Yuan</option>
+                            <option value="SEK">SEK - Swedish Krona</option>
+                            <option value="NZD">NZD - New Zealand Dollar</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="BRL">BRL - Brazilian Real</option>
+                            <option value="RUB">RUB - Russian Ruble</option>
+                            <option value="ZAR">ZAR - South African Rand</option>
+                            <option value="SGD">SGD - Singapore Dollar</option>
+                            <option value="HKD">HKD - Hong Kong Dollar</option>
+                            <option value="MXN">MXN - Mexican Peso</option>
+                            <option value="NOK">NOK - Norwegian Krone</option>
+                            <option value="KRW">KRW - South Korean Won</option>
+                            <option value="TRY">TRY - Turkish Lira</option>
+                            <option value="ARS">ARS - Argentine Peso</option>
+                            <option value="CLP">CLP - Chilean Peso</option>
+                            <option value="COP">COP - Colombian Peso</option>
+                            <option value="CZK">CZK - Czech Koruna</option>
+                            <option value="DKK">DKK - Danish Krone</option>
+                            <option value="EGP">EGP - Egyptian Pound</option>
+                            <option value="HUF">HUF - Hungarian Forint</option>
+                            <option value="IDR">IDR - Indonesian Rupiah</option>
+                            <option value="ILS">ILS - Israeli Shekel</option>
+                            <option value="MYR">MYR - Malaysian Ringgit</option>
+                            <option value="NGN">NGN - Nigerian Naira</option>
+                            <option value="PHP">PHP - Philippine Peso</option>
+                            <option value="PLN">PLN - Polish Zloty</option>
+                            <option value="RON">RON - Romanian Leu</option>
+                            <option value="SAR">SAR - Saudi Riyal</option>
+                            <option value="THB">THB - Thai Baht</option>
+                            <option value="UAH">UAH - Ukrainian Hryvnia</option>
+                            <option value="VND">VND - Vietnamese Dong</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Convert</button>
+                    </div>
+                </form>
+                <div id="result" class="mt-4 text-center text-gray-700"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('currency-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const amount = document.getElementById('amount').value;
+            const fromCurrency = document.getElementById('from-currency').value;
+            const toCurrency = document.getElementById('to-currency').value;
+
+            if (amount === '' || isNaN(amount)) {
+                alert('Please enter a valid amount');
+                return;
+            }
+
+            const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+            const url = `https://api.exchangerate-api.com/v4/latest/${fromCurrency}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const rate = data.rates[toCurrency];
+                    const convertedAmount = (amount * rate).toFixed(2);
+                    document.getElementById('result').innerText = `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching exchange rate:', error);
+                    alert('Error fetching exchange rate. Please try again later.');
+                });
+        });
+    </script>
+</body>
+</html>
+
+Thanks
